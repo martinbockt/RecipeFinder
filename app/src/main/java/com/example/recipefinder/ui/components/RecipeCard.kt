@@ -1,9 +1,7 @@
 package com.example.recipefinder.ui.components
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ShoppingCart
 import androidx.compose.material3.Card
@@ -16,18 +14,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.recipefinder.R
-import com.example.recipefinder.model.Recipecard
+import com.example.recipefinder.model.Recipepreview
 
 
 @Composable
-fun RecipeCard(recipe: Recipecard, modifier: Modifier = Modifier) {
+fun RecipeCard(recipe: Recipepreview, modifier: Modifier = Modifier) {
     Card(modifier = Modifier
         .fillMaxWidth()
-        .padding(8.dp)
+        .padding(16.dp, 0.dp)
         .height(120.dp)) {
         Row(modifier.fillMaxHeight()) {
             Image(
@@ -40,7 +37,6 @@ fun RecipeCard(recipe: Recipecard, modifier: Modifier = Modifier) {
                 contentScale = ContentScale.Crop
             )
             Column(
-
                 Modifier.fillMaxHeight().padding(10.dp),
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
@@ -63,13 +59,12 @@ fun RecipeCard(recipe: Recipecard, modifier: Modifier = Modifier) {
                     )
                 }
             }
-
         }
     }
 }
 
 @Preview
 @Composable
-fun ComposablePreview() {
-    Recipecard("Steak", "10 min", false, R.drawable.image01)
+fun ComposableRecipePreview() {
+    RecipeCard(Recipepreview("Steak", "10 min", false, R.drawable.image01))
 }
