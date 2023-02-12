@@ -1,24 +1,24 @@
 package com.example.recipefinder.data
-import com.example.recipefinder.model.Recipecard
 import com.example.recipefinder.R
+import com.example.recipefinder.model.Recipepreview
 
 /**
- * [Datasource] generates a list of [Recipecard]
+ * [Datasource] generates a list of [Recipepreview]
  */
 class Datasource() {
-    fun loadRecipes(): List<Recipecard>
+    fun loadRecipes(): List<Recipepreview>
     {
-        return listOf<Recipecard>(
-            Recipecard("Steak", "10 min", false, R.drawable.image01),
-            Recipecard("Steak", "10 min", false, R.drawable.image01),
-            Recipecard("Steak", "10 min", false, R.drawable.image01),
-            Recipecard("Steak", "10 min", false, R.drawable.image01),
-            Recipecard("Steak", "10 min", false, R.drawable.image01),
-            Recipecard("Kein Steak", "10 min", true, R.drawable.image01),
-            Recipecard("Kein Steak", "10 min", true, R.drawable.image01),
-            Recipecard("Kein Steak", "10 min", true, R.drawable.image01),
-            Recipecard("Kein Steak", "10 min", true, R.drawable.image01),
-            Recipecard("Kein Steak", "10 min", true, R.drawable.image01),
+        return listOf<Recipepreview>(
+            Recipepreview("Steak", "10 min", false, R.drawable.image01),
+            Recipepreview("Steak", "10 min", false, R.drawable.image01),
+            Recipepreview("Steak", "10 min", false, R.drawable.image01),
+            Recipepreview("Steak", "10 min", false, R.drawable.image01),
+            Recipepreview("Steak", "10 min", false, R.drawable.image01),
+            Recipepreview("Kein Steak", "10 min", true, R.drawable.image01),
+            Recipepreview("Kein Steak", "10 min", true, R.drawable.image01),
+            Recipepreview("Kein Steak", "10 min", true, R.drawable.image01),
+            Recipepreview("Kein Steak", "10 min", true, R.drawable.image01),
+            Recipepreview("Kein Steak", "10 min", true, R.drawable.image01),
         )
     }
 }
