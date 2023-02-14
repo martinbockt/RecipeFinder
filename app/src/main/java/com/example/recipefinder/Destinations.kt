@@ -8,6 +8,7 @@ import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 
 interface Destination {
+    val name: String
     val icon: ImageVector
     val route: String
 }
@@ -16,26 +17,27 @@ interface Destination {
  * Recipefinder app navigation destinations
  */
 object Home : Destination {
+    override val name = "Home"
     override val icon = Icons.Filled.Home
     override val route = "home"
 }
 
 object Search : Destination {
+    override val name = "Search"
     override val icon = Icons.Filled.Search
     override val route = "search"
 }
 
-//object SingleAccount : Destination {
-//    override val icon = Icons.Filled.AddCircle
-//    override val route = "single_account"
-//    const val accountTypeArg = "account_type"
-//    val routeWithArgs = "$route/{$accountTypeArg}"
-//    val arguments = listOf(
-//        navArgument(accountTypeArg) { type = NavType.StringType }
-//    )
-//    val deepLinks = listOf(
-//        navDeepLink { uriPattern = "recipefinder://$route/{$accountTypeArg}" }
-//    )
-//}
+object Recipe : Destination {
+    override val name = "Recipe"
+    override val icon = Icons.Filled.Favorite
+    override val route = "recipe"
+}
+
+object  Settings : Destination {
+    override val name = "Settings"
+    override val icon = Icons.Filled.Settings
+    override val route = "settings"
+}
 
 val TabRowScreens = listOf(Home, Search)
