@@ -18,7 +18,6 @@ import com.example.recipefinder.data.ServiceGenerator
 import com.example.recipefinder.ui.RecipefinderApp
 import retrofit2.Call
 import retrofit2.Response
-import javax.security.auth.callback.Callback
 
 class MainActivity : ComponentActivity() {
     private val themeViewModel: ThemeViewModel by viewModels()
@@ -41,7 +40,7 @@ class MainActivity : ComponentActivity() {
             RecipefinderApp(theme, dataStoreUtil, themeViewModel )
         }
         val serviceGenerator = ServiceGenerator.buildService(ApiService::class.java)
-        val call = serviceGenerator.getRecipe()
+        val call = serviceGenerator.getRecipeById(643859)
 
         call.enqueue(object : retrofit2.Callback<RecipeModel>{
 
