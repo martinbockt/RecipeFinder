@@ -14,6 +14,7 @@ import com.example.recipefinder.data.DataStoreUtil
 import com.example.recipefinder.data.ThemeViewModel
 import com.example.recipefinder.data.ApiService
 import com.example.recipefinder.data.RecipeModel
+import com.example.recipefinder.data.SearchResultModel
 import com.example.recipefinder.data.ServiceGenerator
 import com.example.recipefinder.ui.RecipefinderApp
 import retrofit2.Call
@@ -41,18 +42,18 @@ class MainActivity : ComponentActivity() {
         }
         val serviceGenerator = ServiceGenerator.buildService(ApiService::class.java)
         val call = serviceGenerator.getRecipeById(643859)
+        val call2 = serviceGenerator.searchRecipe(query = "Burger", number = "2")
 
-        call.enqueue(object : retrofit2.Callback<RecipeModel>{
+        call2.enqueue(object : retrofit2.Callback<SearchResultModel>{
 
-
-            override fun onResponse(call: Call<RecipeModel>, response: Response<RecipeModel> ) {
+            override fun onResponse(call: Call<SearchResultModel>, response: Response<SearchResultModel> ) {
                 Log.e("APITEST response", "${response}")
                 if (response.isSuccessful) {
                     Log.e("APITEST body", response.body().toString())
                 }
             }
 
-            override fun onFailure(call: Call<RecipeModel>, t: Throwable) {
+            override fun onFailure(call: Call<SearchResultModel>, t: Throwable) {
                 t.printStackTrace()
                 Log.e("APITEST", t.message.toString())
             }
