@@ -8,8 +8,8 @@ import retrofit2.http.QueryMap
 
 interface ApiService {
 
-    @GET("/recipes/random?apiKey=45e0b13dff70469daeac6e4c793db684&limitLicense=true&number=10")
-    fun getRandomRecipes(): Call<MutableList<RecipeModel>>
+    @GET("/recipes/random?apiKey=45e0b13dff70469daeac6e4c793db684&limitLicense=true&number=1")
+    fun getRandomRecipe(): Call<RandomRecipeResult>
 
     @GET("/recipes/{recipeId}/information?apiKey=45e0b13dff70469daeac6e4c793db684&includeNutrition=false")
     fun getRecipeById(@Path("recipeId") recipeId: Int): Call<RecipeModel>
@@ -20,6 +20,9 @@ interface ApiService {
 
 }
 
+data class RandomRecipeResult(
+    val recipes: List<RecipeModel>,
+)
 data class SearchResultModel(
     val results: List<SearchResultRecipe>,
     val offset: Int,
