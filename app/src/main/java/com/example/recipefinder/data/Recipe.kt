@@ -20,6 +20,7 @@ data class RecipeModel (
     val imageType: String,
     val summary: String,
     val cuisines: List<String>,
+    val dishTypes: List<String>,
     val instructions: String,
     val analyzedInstructions: List<Instruction>,
 )

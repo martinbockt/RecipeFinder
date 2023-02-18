@@ -28,7 +28,7 @@ fun Slider(recipepreview: Recipepreview) {
             state = pagerState
             ) {page ->
             Box {
-                Hero(sliderList[page])
+//                Hero(sliderList[page])
             }
         }
         Row(

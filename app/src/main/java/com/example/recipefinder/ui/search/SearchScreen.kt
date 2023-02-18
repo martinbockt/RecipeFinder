@@ -7,17 +7,17 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
-
 import androidx.compose.material3.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.recipefinder.data.*
 import com.example.recipefinder.ui.components.RecipeCard
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchScreen() {
+fun SearchScreen(navController: NavHostController) {
     var openDialog = remember { mutableStateOf(false) }
 
     if (openDialog.value) {
@@ -62,7 +62,7 @@ fun SearchScreen() {
     var listItemsState by remember { mutableStateOf(value = listOf<RecipeModel>()) }
     val listItems = serviceGenerator.searchRecipe(query = "steak", number = "20")
     // TODO change query = "steak" to query = text
-    enqueueAPI(listItems) {
+    enqueueSearchAPI(listItems) {
         listItemsState = it
     }
 
@@ -76,7 +76,9 @@ fun SearchScreen() {
             }
         }
         items(listItemsState) { recipe ->
-            RecipeCard(recipe)
+            RecipeCard(recipe) {
+                navController.navigate("${it}/true")
+            }
         }
     }
 }

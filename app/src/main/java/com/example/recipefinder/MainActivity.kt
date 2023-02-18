@@ -35,25 +35,5 @@ class MainActivity : ComponentActivity() {
 
             RecipefinderApp(theme, dataStoreUtil, themeViewModel )
         }
-        val serviceGenerator = ServiceGenerator.buildService(ApiService::class.java)
-        val call = serviceGenerator.getRecipeById(643859)
-        val call2 = serviceGenerator.searchRecipe(query = "Burger", number = "2")
-        val call3 = serviceGenerator.getRandomRecipe()
-
-        call3.enqueue(object : retrofit2.Callback<RandomRecipeResult>{
-
-            override fun onResponse(call: Call<RandomRecipeResult>, response: Response<RandomRecipeResult> ) {
-                Log.e("APITEST response", "${response}")
-                if (response.isSuccessful) {
-                    Log.e("APITEST body", response.body().toString())
-                }
-            }
-
-            override fun onFailure(call: Call<RandomRecipeResult>, t: Throwable) {
-                t.printStackTrace()
-                Log.e("APITEST", t.message.toString())
-            }
-
-        })
     }
 }

@@ -1,9 +1,7 @@
 package com.example.recipefinder.ui.components
 
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ShoppingCart
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -13,22 +11,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.example.recipefinder.R
 import com.example.recipefinder.data.RecipeModel
-import com.example.recipefinder.model.Recipepreview
+import com.example.recipefinder.data.getIcon
 
 
 @Composable
-fun RecipeCard(recipe: RecipeModel, modifier: Modifier = Modifier) {
+fun RecipeCard(recipe: RecipeModel, modifier: Modifier = Modifier, navigateTo: (String) -> Unit) {
     Card(modifier = Modifier
         .fillMaxWidth()
         .padding(16.dp, 0.dp)
         .height(120.dp)) {
-        Row(modifier.fillMaxHeight()) {
+        Row(modifier.fillMaxHeight().clickable {
+            navigateTo("recipe/${recipe.id}")
+        }) {
             AsyncImage(
                 model = recipe.image,
                 contentDescription = recipe.title,
@@ -52,12 +49,12 @@ fun RecipeCard(recipe: RecipeModel, modifier: Modifier = Modifier) {
                     verticalAlignment = Alignment.Bottom
                 ) {
                     Text(
-                        text = recipe.readyInMinutes.toString() + " min",
+                        text = if (recipe.readyInMinutes != 0) recipe.readyInMinutes.toString() + " min" else "",
                         style = MaterialTheme.typography.bodyLarge
                     )
                     Icon(
-                        Icons.Rounded.ShoppingCart,
-                        contentDescription = "test"
+                        getIcon(recipe),
+                        contentDescription = null
                     )
                 }
             }
