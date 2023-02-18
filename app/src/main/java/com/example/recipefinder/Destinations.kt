@@ -31,7 +31,7 @@ object Search : Destination {
 object Recipe : Destination {
     override val name = "Recipe"
     override val icon = Icons.Filled.Favorite
-    override val route = "recipe"
+    override val route = "recipe/{recipeID}/{apiCall}"
 }
 
 object  Settings : Destination {

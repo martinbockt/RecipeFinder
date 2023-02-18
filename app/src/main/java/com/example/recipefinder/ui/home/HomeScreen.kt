@@ -9,15 +9,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.dp
-import com.example.recipefinder.data.Datasource
 import com.example.recipefinder.model.Recipepreview
 import com.example.recipefinder.ui.components.RecipeCard
 
 @Composable
 fun HomeScreen() {
-    RecipecardList(
-        recipecardList = Datasource().loadRecipes()
-    )
+//    RecipecardList(
+////        recipecardList = Datasource().loadRecipes()
+//    )
 }
 
 @Composable
@@ -40,7 +39,7 @@ fun RecipecardList(recipecardList: List<Recipepreview>) {
         contentPadding = PaddingValues(bottom = 16.dp)
     ) {
         item {
-            Slider(recipepreview = Datasource().loadRecipes().first())
+//            Slider(recipepreview = Datasource().loadRecipes().first())
         }
         item {
             FilterRecipes(chipList = originalChips, tempList = temp)
