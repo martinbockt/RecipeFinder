@@ -16,19 +16,21 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.example.recipefinder.R
+import com.example.recipefinder.data.RecipeModel
 import com.example.recipefinder.model.Recipepreview
 
 
 @Composable
-fun RecipeCard(recipe: Recipepreview, modifier: Modifier = Modifier) {
+fun RecipeCard(recipe: RecipeModel, modifier: Modifier = Modifier) {
     Card(modifier = Modifier
         .fillMaxWidth()
         .padding(16.dp, 0.dp)
         .height(120.dp)) {
         Row(modifier.fillMaxHeight()) {
-            Image(
-                painter = painterResource(recipe.imageResourceId),
+            AsyncImage(
+                model = recipe.image,
                 contentDescription = recipe.title,
                 modifier = Modifier
                     .width(160.dp)
@@ -42,7 +44,7 @@ fun RecipeCard(recipe: Recipepreview, modifier: Modifier = Modifier) {
             ) {
                 Text(
                     text = recipe.title,
-                    style = MaterialTheme.typography.titleLarge
+                    style = MaterialTheme.typography.titleMedium
                 )
                 Row(
                     Modifier.fillMaxWidth(),
@@ -50,7 +52,7 @@ fun RecipeCard(recipe: Recipepreview, modifier: Modifier = Modifier) {
                     verticalAlignment = Alignment.Bottom
                 ) {
                     Text(
-                        text = recipe.duration,
+                        text = recipe.readyInMinutes.toString() + " min",
                         style = MaterialTheme.typography.bodyLarge
                     )
                     Icon(
@@ -63,8 +65,8 @@ fun RecipeCard(recipe: Recipepreview, modifier: Modifier = Modifier) {
     }
 }
 
-@Preview
-@Composable
-fun ComposableRecipePreview() {
-    RecipeCard(Recipepreview("Steak", "10 min", false, R.drawable.image01))
-}
+//@Preview
+//@Composable
+//fun ComposableRecipePreview() {
+////    RecipeCard(Recipepreview("Steak", "10 min", false, R.drawable.image01))
+//}
