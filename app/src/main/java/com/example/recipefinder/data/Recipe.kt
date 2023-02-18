@@ -16,16 +16,12 @@ data class RecipeModel (
     val readyInMinutes: Int,
     val servings: Int,
     val sourceUrl: String,
+    val image: String,
     val imageType: String,
     val summary: String,
     val cuisines: List<String>,
     val instructions: String,
     val analyzedInstructions: List<Instruction>,
-
-
-
-
-
 )
 
 data class Ingredient(

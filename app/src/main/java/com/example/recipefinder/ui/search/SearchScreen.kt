@@ -5,13 +5,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+
 import androidx.compose.material3.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.recipefinder.data.Datasource
-import com.example.recipefinder.model.Recipepreview
+import com.example.recipefinder.data.*
 import com.example.recipefinder.ui.components.RecipeCard
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -57,6 +58,13 @@ fun SearchScreen() {
     }
 
     var text by rememberSaveable { mutableStateOf("") }
+    val serviceGenerator = ServiceGenerator.buildService(ApiService::class.java)
+    var listItemsState by remember { mutableStateOf(value = listOf<RecipeModel>()) }
+    val listItems = serviceGenerator.searchRecipe(query = "steak", number = "20")
+    // TODO change query = "steak" to query = text
+    enqueueAPI(listItems) {
+        listItemsState = it
+    }
 
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -67,7 +75,7 @@ fun SearchScreen() {
                 text = it
             }
         }
-        items(Datasource().loadRecipes()) { recipe ->
+        items(listItemsState) { recipe ->
             RecipeCard(recipe)
         }
     }

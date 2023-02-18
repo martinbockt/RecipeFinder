@@ -45,8 +45,8 @@ fun RecipecardList(recipecardList: List<Recipepreview>) {
         item {
             FilterRecipes(chipList = originalChips, tempList = temp)
         }
-        items(recipecardList) { recipe ->
-            RecipeCard(recipe)
-        }
+//        items(recipecardList) { recipe ->
+//            RecipeCard(recipe)
+//        }
     }
 }

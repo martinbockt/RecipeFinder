@@ -24,7 +24,7 @@ data class RandomRecipeResult(
     val recipes: List<RecipeModel>,
 )
 data class SearchResultModel(
-    val results: List<SearchResultRecipe>,
+    val results: List<RecipeModel>,
     val offset: Int,
     val number: Int,
     val totalResults: Int,
