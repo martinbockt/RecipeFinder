@@ -10,6 +10,8 @@ import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.example.recipefinder.data.*
 import com.example.recipefinder.ui.RecipefinderApp
 import retrofit2.Call
@@ -18,6 +20,7 @@ import retrofit2.Response
 class MainActivity : ComponentActivity() {
     private val themeViewModel: ThemeViewModel by viewModels()
     private lateinit var dataStoreUtil: DataStoreUtil
+    private lateinit var recipeViewModel: RecipeViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +31,20 @@ class MainActivity : ComponentActivity() {
             Configuration.UI_MODE_NIGHT_NO -> { false }
             else -> { false }
         }
+        recipeViewModel = ViewModelProvider(this).get(RecipeViewModel::class.java)
+        val recipe = SavedRecipe(
+            id = 0, name = "testrecipe"
+        )
+        recipeViewModel.deleteAllRecipes()
+        recipeViewModel.addRecipe(recipe = recipe)
+        recipeViewModel.readAllData.observe(this, Observer{
+            recipes ->
+                if (!recipes.isEmpty()) {
+                    Log.e("TTTT", "ITEMS: $recipes")
+                }
+            Log.e("TTTT", "ITEMS: $recipe")
+        })
+
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
