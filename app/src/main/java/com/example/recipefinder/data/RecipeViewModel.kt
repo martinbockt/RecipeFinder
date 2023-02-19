@@ -12,11 +12,13 @@ class RecipeViewModel(application: Application): AndroidViewModel(application) {
 
     val readAllData: LiveData<List<SavedRecipe>>
     private val repository: RecipeRepository
+    var eventSingle: LiveData<SavedRecipe>? = null
 
     init {
         val recipeDAO = RecipeDatabase.getDatabase(application).recipeDao()
         repository = RecipeRepository(recipeDAO)
         readAllData = repository.readAllData
+
     }
 
     fun addRecipe(recipe: SavedRecipe){
@@ -35,6 +37,10 @@ class RecipeViewModel(application: Application): AndroidViewModel(application) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteAllRecipes()
         }
+    }
+
+    fun getSingle(eventId: String) {
+        eventSingle = repository.loadSingle(eventId)
     }
 
 }
