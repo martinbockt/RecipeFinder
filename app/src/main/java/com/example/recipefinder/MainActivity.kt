@@ -9,6 +9,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.runtime.collectAsState
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.recipefinder.data.*
@@ -29,8 +30,6 @@ class MainActivity : ComponentActivity() {
             else -> { false }
         }
         recipeViewModel = ViewModelProvider(this).get(RecipeViewModel::class.java)
-
-//        recipeViewModel.deleteAllRecipes()
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
