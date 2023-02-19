@@ -63,7 +63,8 @@ class MainActivity : ComponentActivity() {
 
                         if (addresses!!.size > 0) {
                             val countryName = addresses!![0].countryName
-                            Log.e("LocationLogDebug", countryName)
+                            val formattedName = GeoHelper.formatLocationToCuisine(countryName)
+                            Log.e("LocationLogDebug", formattedName)
                         }
                     }
                 }
