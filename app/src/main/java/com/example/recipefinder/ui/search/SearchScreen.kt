@@ -17,18 +17,21 @@ import com.example.recipefinder.ui.components.RecipeCard
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchScreen(navController: NavHostController) {
+fun SearchScreen(navController: NavHostController, dataStoreUtil: DataStoreUtil) {
     val openDialog = remember { mutableStateOf(false) }
+    val openedDialogOnce = rememberSaveable { mutableStateOf(false) }
     val searchSettings = rememberSaveable(saver = InitialSearchSettingsSaver) { InitialSearchSettings() }
+    val foodPreference = dataStoreUtil.getFoodPreference("Everything").collectAsState(initial = "Everything").value
+
+    if (!openedDialogOnce.value) {
+        if (foodPreference != "Everything") {
+            searchSettings.diet = foodPreference
+        }
+    }
 
     if (openDialog.value) {
         AlertDialog(
-            onDismissRequest = {
-                // Dismiss the dialog when the user clicks outside the dialog or on the back
-                // button. If you want to disable that functionality, simply use an empty
-                // onDismissRequest.
-                openDialog.value = false
-            }
+            onDismissRequest = { openDialog.value = false }
         ) {
             Surface(
                 modifier = Modifier
@@ -101,8 +104,11 @@ fun SearchScreen(navController: NavHostController) {
         contentPadding = PaddingValues(bottom = 16.dp)
     ) {
         item {
-            SearchSettings(text = text, toggleDialog = {openDialog.value = true}, getLucky = {
-                enqueueRandomAPI(serviceGenerator.getRandomRecipe()) {
+            SearchSettings(text = text, toggleDialog = {
+                openDialog.value = true
+                openedDialogOnce.value = true
+                                                       }, getLucky = {
+                enqueueRandomAPI(serviceGenerator.getRandomRecipe(tags = searchSettings.diet?.lowercase())) {
                     listItemsState = it
                 }
             }) {
