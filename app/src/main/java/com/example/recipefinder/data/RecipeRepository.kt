@@ -1,7 +1,7 @@
 package com.example.recipefinder.data
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import com.example.recipefinder.model.SavedRecipe
 
 class RecipeRepository(private val recipeDAO: RecipeDAO) {
 

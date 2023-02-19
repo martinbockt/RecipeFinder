@@ -2,7 +2,6 @@ package com.example.recipefinder.ui.recipe
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.material3.AssistChip
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -11,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.example.recipefinder.data.RecipeModel
+import com.example.recipefinder.model.RecipeModel
 
 @Composable
 fun recipeInstructions(recipe: RecipeModel) {

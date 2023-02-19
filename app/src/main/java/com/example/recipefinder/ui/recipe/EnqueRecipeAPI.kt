@@ -1,7 +1,7 @@
 package com.example.recipefinder.ui.recipe
 
 import android.util.Log
-import com.example.recipefinder.data.RecipeModel
+import com.example.recipefinder.model.RecipeModel
 import retrofit2.Call
 import retrofit2.Response
 

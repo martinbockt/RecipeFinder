@@ -1,6 +1,4 @@
-package com.example.recipefinder.data
-
-import androidx.compose.ui.Modifier
+package com.example.recipefinder.model
 
 data class RecipeModel (
    val vegetarian: Boolean,

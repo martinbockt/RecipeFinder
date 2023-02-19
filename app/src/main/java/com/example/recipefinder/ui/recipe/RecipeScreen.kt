@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -14,6 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.recipefinder.data.*
+import com.example.recipefinder.model.RecipeModel
+import com.example.recipefinder.model.SavedRecipe
 import com.example.recipefinder.ui.components.Hero
 
 const val ingredientBasePath = "https://spoonacular.com/cdn/ingredients_100x100/"

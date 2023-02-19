@@ -9,7 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.recipefinder.data.RecipeModel
+import com.example.recipefinder.model.RecipeModel
 
 fun getTags(recipe: RecipeModel): MutableList<String> {
     var tags = mutableListOf<String>()
