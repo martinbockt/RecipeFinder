@@ -18,7 +18,8 @@ import com.example.recipefinder.ui.components.RecipeCard
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchScreen(navController: NavHostController) {
-    var openDialog = remember { mutableStateOf(false) }
+    val openDialog = remember { mutableStateOf(false) }
+    val searchSettings = rememberSaveable(saver = InitialSearchSettingsSaver) { InitialSearchSettings() }
 
     if (openDialog.value) {
         AlertDialog(
@@ -38,19 +39,39 @@ fun SearchScreen(navController: NavHostController) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text(
                         text = "Settings",
-                        style = MaterialTheme.typography.labelLarge
+                        style = MaterialTheme.typography.titleLarge
                     )
-                    Spacer(modifier = Modifier.height(24.dp))
-                    Text(
-                        text = "Cuisine"
-                    )
+                    Spacer(modifier = Modifier.height(16.dp))
+                    CuisineSettings(
+                        if (searchSettings.cuisine != null)
+                            searchSettings.cuisine!!.split(", ")
+                    else
+                            searchSettings.excludeCuisine?.split(", ")
+                    ) { cuisines, addCuisines ->
+                        if (addCuisines) {
+                            searchSettings.cuisine = cuisines
+                            searchSettings.excludeCuisine = null
+                        } else {
+                            searchSettings.excludeCuisine = cuisines
+                            searchSettings.cuisine = null
+                        }
+                    }
+                    TypeSettings(searchSettings.type?.split(", ")) {
+                        searchSettings.type = it
+                    }
+                    DietSettings(searchSettings.diet?.split(", ")) {
+                        searchSettings.diet = it
+                    }
+                    IntoleranceSettings(searchSettings.intolerances?.split(", ")) {
+                        searchSettings.intolerances = it
+                    }
                     TextButton(
                         onClick = {
                             openDialog.value = false
                         },
                         modifier = Modifier.align(Alignment.End)
                     ) {
-                        Text("Confirm")
+                        Text("Close")
                     }
                 }
             }
@@ -60,7 +81,16 @@ fun SearchScreen(navController: NavHostController) {
     var text by rememberSaveable { mutableStateOf("") }
     val serviceGenerator = ServiceGenerator.buildService(ApiService::class.java)
     var listItemsState by remember { mutableStateOf(value = listOf<RecipeModel>()) }
-    val listItems = serviceGenerator.searchRecipe(query = "steak", number = "20")
+    val listItems = serviceGenerator.searchRecipe(
+        query = text,
+        number = "20",
+        cuisine = searchSettings.cuisine,
+        excludeCuisine = searchSettings.excludeCuisine,
+        diet = searchSettings.diet,
+        intolerances = searchSettings.intolerances,
+        type = searchSettings.type,
+        maxReadyTime = searchSettings.maxReadyTime
+    )
     // TODO change query = "steak" to query = text
     enqueueSearchAPI(listItems) {
         listItemsState = it
@@ -71,7 +101,11 @@ fun SearchScreen(navController: NavHostController) {
         contentPadding = PaddingValues(bottom = 16.dp)
     ) {
         item {
-            SearchSettings(text = text, toggleDialog = {openDialog.value = true}) {
+            SearchSettings(text = text, toggleDialog = {openDialog.value = true}, getLucky = {
+                enqueueRandomAPI(serviceGenerator.getRandomRecipe()) {
+                    listItemsState = it
+                }
+            }) {
                 text = it
             }
         }
@@ -81,4 +115,15 @@ fun SearchScreen(navController: NavHostController) {
             }
         }
     }
+}
+
+fun filterChipsToString(chipList: List<String>, multipleChecked: Set<Int>): String? {
+    var returnChips = ""
+    chipList.forEachIndexed { index, chip ->
+        if (multipleChecked.contains(index)) returnChips += "${chip}, "
+    }
+    if (returnChips == "") {
+        return null
+    }
+    return returnChips.dropLast(2)
 }
