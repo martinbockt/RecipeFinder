@@ -40,8 +40,10 @@ fun HomeScreen(navController: NavHostController, dataStoreUtil: DataStoreUtil, r
         contentPadding = PaddingValues(bottom = 16.dp)
     ) {
         item {
-            Slider(sliderList = listItemsHeroState) {
-                navController.navigate("${it}/true")
+            if (listItemsHeroState.isNotEmpty()) {
+                Slider(sliderList = listItemsHeroState) {
+                    navController.navigate("${it}/true")
+                }
             }
         }
         item {

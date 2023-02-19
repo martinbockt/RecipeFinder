@@ -33,26 +33,25 @@ import kotlinx.coroutines.*
 @Composable
 fun Slider(sliderList: List<RecipeModel>, navigateTo: (String) -> Unit) {
     val pagerState = rememberPagerState(initialPage = 0)
+    val coroutineScope = rememberCoroutineScope()
 
-//    val coroutineScope = rememberCoroutineScope()
-//
-//    DisposableEffect(Unit) {
-//        val tickerChannel = ticker(delayMillis = 500, initialDelayMillis = 0)
-//        val tickerJob = coroutineScope.launch {
-//            for (event in tickerChannel) {
-//                if (pagerState.currentPage == 2) {
-//                    pagerState.scrollToPage(pagerState.currentPage + 1)
-//                } else {
-//                    pagerState.scrollToPage(pagerState.currentPage + 1)
-//                }
-//            }
-//        }
-//
-//        onDispose {
-//            tickerJob.cancel()
-//            tickerChannel.cancel()
-//        }
-//    }
+    DisposableEffect(Unit) {
+        val tickerChannel = ticker(delayMillis = 5000, initialDelayMillis = 0)
+        val tickerJob = coroutineScope.launch {
+            for (event in tickerChannel) {
+                if (pagerState.currentPage == 2) {
+                    pagerState.animateScrollToPage(0)
+                } else {
+                    pagerState.animateScrollToPage(pagerState.currentPage + 1 )
+                }
+            }
+        }
+
+        onDispose {
+            tickerJob.cancel()
+            tickerChannel.cancel()
+        }
+    }
 
 
     Box {
