@@ -11,5 +11,4 @@ data class SavedRecipe (
     val title: String,
     val readyInMinutes: Int,
     val image: String,
-
 )

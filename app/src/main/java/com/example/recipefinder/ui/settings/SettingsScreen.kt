@@ -3,18 +3,15 @@ package com.example.recipefinder.ui.settings
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.recipefinder.data.DataStoreUtil
 import com.example.recipefinder.data.ThemeViewModel
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import com.example.recipefinder.data.RecipeViewModel
 import kotlinx.coroutines.launch
 
 val colors = listOf(
@@ -29,13 +26,24 @@ val colors = listOf(
     Color(0xFFB39DDB)
 )
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(
     dataStoreUtil: DataStoreUtil,
     themeViewModel: ThemeViewModel,
+    recipeViewModel: RecipeViewModel
 ) {
+    val openDialog = remember { mutableStateOf(false) }
     var switchState by remember {themeViewModel.isDarkThemeEnabled }
     val coroutineScope = rememberCoroutineScope()
+
+    if (openDialog.value) {
+        DeleteAllRecipeDialog({openDialog.value = it}) {
+            openDialog.value = it
+            recipeViewModel.deleteAllRecipes()
+        }
+    }
+
     Column(modifier = Modifier.fillMaxWidth()) {
         Card(
             modifier = Modifier.fillMaxWidth(),
@@ -72,6 +80,17 @@ fun SettingsScreen(
             FoodPreferences(dataStoreUtil) {
                 coroutineScope.launch {
                     dataStoreUtil.saveFoodPreferences(it)
+                }
+            }
+            Column(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .fillMaxWidth(),
+                verticalArrangement = Arrangement.Bottom,
+                horizontalAlignment = Alignment.End
+            ) {
+                Button(onClick = { openDialog.value = true }) {
+                    Text("Clear liked recipes")
                 }
             }
         }

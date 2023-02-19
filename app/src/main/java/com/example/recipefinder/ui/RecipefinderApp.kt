@@ -12,6 +12,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.recipefinder.*
 import com.example.recipefinder.data.DataStoreUtil
+import com.example.recipefinder.data.RecipeViewModel
 import com.example.recipefinder.data.ThemeViewModel
 import com.example.recipefinder.ui.theme.RecipeFinderTheme
 
@@ -44,7 +45,8 @@ val bottomNavItems = listOf(
 fun RecipefinderApp(
     theme: State<Boolean>,
     dataStoreUtil: DataStoreUtil,
-    themeViewModel: ThemeViewModel
+    themeViewModel: ThemeViewModel,
+    recipeViewModel: RecipeViewModel
 ) {
 
     RecipeFinderTheme(
@@ -87,7 +89,8 @@ fun RecipefinderApp(
                 navController = navController,
                 modifier = Modifier.padding(innerPadding),
                 dataStoreUtil,
-                themeViewModel
+                themeViewModel,
+                recipeViewModel
             )
         }
     }
