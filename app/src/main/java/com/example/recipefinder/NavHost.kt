@@ -28,7 +28,7 @@ fun RecipefinderNavHost(
             HomeScreen()
         }
         composable(route = Search.route) {
-            SearchScreen(navController)
+            SearchScreen(navController, dataStoreUtil)
         }
         composable(route = Recipe.route) {
                 backStackEntry ->

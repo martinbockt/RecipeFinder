@@ -1,15 +1,11 @@
 package com.example.recipefinder.ui
 
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Home
-import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.*
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -52,6 +48,7 @@ fun RecipefinderApp(
 ) {
 
     RecipeFinderTheme(
+        dataStoreUtil = dataStoreUtil,
         darkTheme = theme.value,
         ) {
         val navController = rememberNavController()
