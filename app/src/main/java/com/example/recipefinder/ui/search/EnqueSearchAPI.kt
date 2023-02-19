@@ -1,8 +1,8 @@
 package com.example.recipefinder.ui.search
 
 import android.util.Log
-import com.example.recipefinder.data.RecipeModel
 import com.example.recipefinder.data.SearchResultModel
+import com.example.recipefinder.model.RecipeModel
 import retrofit2.Call
 import retrofit2.Response
 

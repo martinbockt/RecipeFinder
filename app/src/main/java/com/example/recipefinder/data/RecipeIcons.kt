@@ -2,6 +2,7 @@ package com.example.recipefinder.data
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.example.recipefinder.model.RecipeModel
 
 private val FoodMap = mapOf(
     "asian" to Icons.Rounded.RamenDining,

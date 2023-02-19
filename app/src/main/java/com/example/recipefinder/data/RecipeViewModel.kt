@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.recipefinder.model.SavedRecipe
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

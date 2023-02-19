@@ -95,8 +95,6 @@ class MainActivity : ComponentActivity() {
             Manifest.permission.ACCESS_COARSE_LOCATION))
 
         setContent {
-            var listItemsHeroState by remember { mutableStateOf(value = listOf<RecipeModel>()) }
-
             val theme = dataStoreUtil.getTheme(systemTheme).collectAsState(initial = systemTheme)
             themeViewModel.setTheme(theme)
 

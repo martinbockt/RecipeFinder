@@ -15,9 +15,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.example.recipefinder.data.RecipeModel
-import com.example.recipefinder.data.SavedRecipe
-import com.example.recipefinder.data.getIcon
+import com.example.recipefinder.model.SavedRecipe
 
 
 @Composable

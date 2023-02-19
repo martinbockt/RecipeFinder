@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.recipefinder.data.*
+import com.example.recipefinder.model.RecipeModel
 import com.example.recipefinder.ui.components.RecipeCard
 
 @OptIn(ExperimentalMaterial3Api::class)

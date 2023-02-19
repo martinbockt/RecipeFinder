@@ -1,8 +1,8 @@
 package com.example.recipefinder.data
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.room.*
+import com.example.recipefinder.model.SavedRecipe
 
 
 @Dao
