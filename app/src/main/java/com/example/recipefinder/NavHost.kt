@@ -19,7 +19,8 @@ fun RecipefinderNavHost(
     modifier: Modifier = Modifier,
     dataStoreUtil: DataStoreUtil,
     themeViewModel: ThemeViewModel,
-    recipeViewModel: RecipeViewModel
+    recipeViewModel: RecipeViewModel,
+    userLocationCountry: String
 ) {
     NavHost(
         navController = navController,
@@ -27,7 +28,7 @@ fun RecipefinderNavHost(
         modifier = modifier
     ) {
         composable(route = Home.route) {
-            HomeScreen(navController, dataStoreUtil, recipeViewModel)
+            HomeScreen(navController, dataStoreUtil, recipeViewModel, userLocationCountry)
         }
         composable(route = Search.route) {
             SearchScreen(navController, dataStoreUtil, recipeViewModel)

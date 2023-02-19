@@ -14,17 +14,13 @@ import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.*
 import androidx.core.view.WindowCompat
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.recipefinder.data.*
 import com.example.recipefinder.ui.RecipefinderApp
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import retrofit2.Call
-import retrofit2.Response
 import java.util.*
 
 class MainActivity : ComponentActivity() {
@@ -49,6 +45,8 @@ class MainActivity : ComponentActivity() {
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
+        var userLocationCountry = ""
+
         val locationPermissionRequest = registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions()
         ) { permissions ->
@@ -64,29 +62,45 @@ class MainActivity : ComponentActivity() {
                         if (addresses!!.size > 0) {
                             val countryName = addresses!![0].countryName
                             val formattedName = GeoHelper.formatLocationToCuisine(countryName)
+                            userLocationCountry = formattedName
                             Log.e("LocationLogDebug", formattedName)
                         }
                     }
                 }
                 permissions.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
-                    // Only approximate location access granted.
+                    fusedLocationClient.getCurrentLocation(LocationRequest.QUALITY_HIGH_ACCURACY, null).addOnSuccessListener {
+                        Log.e("LocationLogDebug", it.toString())
+                        val lat = it.latitude
+                        val lng = it.longitude
+                        val gcd = Geocoder(this, Locale.getDefault())
+                        val addresses = gcd.getFromLocation(lat, lng, 1)
+
+                        if (addresses!!.size > 0) {
+                            val countryName = addresses!![0].countryName
+                            val formattedName = GeoHelper.formatLocationToCuisine(countryName)
+                            userLocationCountry = formattedName
+                            Log.e("LocationLogDebug", formattedName)
+                        }
+                    }
                 } else -> {
                 // No location access granted.
             }
             }
         }
 
+
+
         locationPermissionRequest.launch(arrayOf(
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION))
 
-
-
         setContent {
+            var listItemsHeroState by remember { mutableStateOf(value = listOf<RecipeModel>()) }
+
             val theme = dataStoreUtil.getTheme(systemTheme).collectAsState(initial = systemTheme)
             themeViewModel.setTheme(theme)
 
-            RecipefinderApp(theme, dataStoreUtil, themeViewModel, recipeViewModel)
+            RecipefinderApp(theme, dataStoreUtil, themeViewModel, recipeViewModel, userLocationCountry)
         }
     }
 }

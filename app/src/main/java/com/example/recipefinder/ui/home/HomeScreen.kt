@@ -1,6 +1,5 @@
 package com.example.recipefinder.ui.home
 
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -10,21 +9,24 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.toLowerCase
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.Observer
 import androidx.navigation.NavHostController
 import com.example.recipefinder.data.*
-import com.example.recipefinder.model.Recipepreview
 import com.example.recipefinder.ui.components.LikedRecipeCard
 import com.example.recipefinder.ui.components.RecipeCard
 import com.example.recipefinder.ui.search.enqueueRandomAPI
 
 @Composable
-fun HomeScreen(navController: NavHostController, dataStoreUtil: DataStoreUtil, recipeViewModel: RecipeViewModel) {
+fun HomeScreen(navController: NavHostController,
+               dataStoreUtil: DataStoreUtil,
+               recipeViewModel: RecipeViewModel,
+               userLocationCountry: String
+) {
     val foodPreference = dataStoreUtil.getFoodPreference("Everything").collectAsState(initial = "Everything").value
     val serviceGenerator = ServiceGenerator.buildService(ApiService::class.java)
     var listItemsHeroState by remember { mutableStateOf(value = listOf<RecipeModel>()) }
+    var listItemsLocationState by remember { mutableStateOf(value = listOf<RecipeModel>()) }
+    val likedItems by recipeViewModel.readAllData.observeAsState()
 
     val listItemsHero = serviceGenerator.getRandomRecipe(
         number = "3",
@@ -33,7 +35,14 @@ fun HomeScreen(navController: NavHostController, dataStoreUtil: DataStoreUtil, r
     enqueueRandomAPI(listItemsHero) {
         listItemsHeroState = it
     }
-    val likedItems by recipeViewModel.readAllData.observeAsState()
+
+    val listItems = serviceGenerator.getRandomRecipe(
+        number = "10",
+        tags = if (foodPreference.lowercase() != "everything") foodPreference.lowercase() + ", " + userLocationCountry else userLocationCountry
+    )
+    enqueueRandomAPI(listItems) {
+        listItemsLocationState = it
+    }
 
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -72,12 +81,16 @@ fun HomeScreen(navController: NavHostController, dataStoreUtil: DataStoreUtil, r
                 }
             }
         }
-
-//        item {
-//            FilterRecipes(chipList = originalChips, tempList = temp)
-//        }
-//        items(recipecardList) { recipe ->
-//            RecipeCard(recipe)
-//        }
+        item {
+            Text(text = userLocationCountry + "Food",
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier.padding(horizontal = 16.dp)
+            )
+        }
+        items(listItemsLocationState) {recipe ->
+            RecipeCard(recipe = recipe) {
+                navController.navigate("${it}/true")
+            }
+        }
     }
 }

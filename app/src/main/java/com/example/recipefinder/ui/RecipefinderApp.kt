@@ -46,7 +46,8 @@ fun RecipefinderApp(
     theme: State<Boolean>,
     dataStoreUtil: DataStoreUtil,
     themeViewModel: ThemeViewModel,
-    recipeViewModel: RecipeViewModel
+    recipeViewModel: RecipeViewModel,
+    userLocationCountry: String
 ) {
 
     RecipeFinderTheme(
@@ -54,10 +55,6 @@ fun RecipefinderApp(
         darkTheme = theme.value,
         ) {
         val navController = rememberNavController()
-        val currentBackStack by navController.currentBackStackEntryAsState()
-        val currentDestination = currentBackStack?.destination
-        val currentScreen =
-            TabRowScreens.find { it.route == currentDestination?.route } ?: Home
         val backStackEntry = navController.currentBackStackEntryAsState()
 
         Scaffold(
@@ -90,7 +87,8 @@ fun RecipefinderApp(
                 modifier = Modifier.padding(innerPadding),
                 dataStoreUtil,
                 themeViewModel,
-                recipeViewModel
+                recipeViewModel,
+                userLocationCountry
             )
         }
     }
