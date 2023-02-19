@@ -17,7 +17,7 @@ import com.example.recipefinder.ui.components.RecipeCard
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchScreen(navController: NavHostController, dataStoreUtil: DataStoreUtil) {
+fun SearchScreen(navController: NavHostController, dataStoreUtil: DataStoreUtil, recipeViewModel: RecipeViewModel) {
     val openDialog = remember { mutableStateOf(false) }
     val openedDialogOnce = rememberSaveable { mutableStateOf(false) }
     val searchSettings = rememberSaveable(saver = InitialSearchSettingsSaver) { InitialSearchSettings() }

@@ -3,6 +3,7 @@ package com.example.recipefinder
 
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -28,18 +29,8 @@ class MainActivity : ComponentActivity() {
             else -> { false }
         }
         recipeViewModel = ViewModelProvider(this).get(RecipeViewModel::class.java)
-        val recipe = SavedRecipe(
-            id = 0, name = "testrecipe"
-        )
-        recipeViewModel.deleteAllRecipes()
-        recipeViewModel.addRecipe(recipe = recipe)
-        recipeViewModel.readAllData.observe(this, Observer{
-            recipes ->
-                if (!recipes.isEmpty()) {
-                    Log.e("TTTT", "ITEMS: $recipes")
-                }
-            Log.e("TTTT", "ITEMS: $recipe")
-        })
+
+//        recipeViewModel.deleteAllRecipes()
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
@@ -47,7 +38,7 @@ class MainActivity : ComponentActivity() {
             val theme = dataStoreUtil.getTheme(systemTheme).collectAsState(initial = systemTheme)
             themeViewModel.setTheme(theme)
 
-            RecipefinderApp(theme, dataStoreUtil, themeViewModel )
+            RecipefinderApp(theme, dataStoreUtil, themeViewModel, recipeViewModel)
         }
     }
 }
