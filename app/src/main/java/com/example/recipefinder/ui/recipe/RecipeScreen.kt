@@ -1,6 +1,5 @@
 package com.example.recipefinder.ui.recipe
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -8,6 +7,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Save
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -36,17 +36,17 @@ fun RecipeScreen(navController: NavHostController, recipeID: Int, apiCall: Boole
             Box {
                 Hero(recipe)
                 Row(
-                    Modifier.fillMaxWidth().padding(16.dp),
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                 ) {
-                    Icon(
-                        Icons.Rounded.ArrowBack,
-                        contentDescription = "Previous Screen",
-                        modifier = Modifier.clickable {
-                            navController.popBackStack()
-                        }
-                    )
-                    Icon(Icons.Rounded.Save, contentDescription = "Save Recipe")
+                    IconButton(onClick = { navController.popBackStack() }) {
+                        Icon(Icons.Rounded.ArrowBack, contentDescription = "Previous Screen")
+                    }
+                    IconButton(onClick = { /*TODO*/ }) {
+                        Icon(Icons.Rounded.Save, contentDescription = "Save Recipe")
+                    }
                 }
             }
         }
