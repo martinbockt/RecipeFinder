@@ -26,14 +26,20 @@ fun Hero(recipepreview: RecipeModel) {
             contentScale = ContentScale.FillBounds,
         )
         Row(
-            Modifier.fillMaxWidth().fillMaxHeight().
-            background(
+            Modifier.fillMaxWidth()
+                .fillMaxHeight()
+                .background(
                 Brush.verticalGradient(
                     listOf(Color.Transparent, Color.Black),
                     280 * 0.5F,
                     280 * 3.5F
                 )
-            ).padding(20.dp),
+            ).background(Brush.verticalGradient(
+                    listOf(Color.Transparent, Color.Black.copy(0.2f)),
+                    280 * 100F,
+                    280 * 80F
+                )
+        ).padding(20.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.Bottom
         ) {
